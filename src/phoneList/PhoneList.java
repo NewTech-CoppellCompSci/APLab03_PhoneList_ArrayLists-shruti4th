@@ -1,5 +1,7 @@
 package phoneList;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 /*
@@ -11,7 +13,7 @@ import java.util.Scanner;
  * You MUST
  *   - Use an ArrayList
  *   - Keep list in alphabetical order
- *   - Complete the 
+ *   - Complete the given methods
  *   
  * You May
  *   - Add methods as you see fit
@@ -29,20 +31,25 @@ public class PhoneList {
 	/*
 	 * Instance Variables
 	 */
-	
+	private Contact name;
+	private Contact number;
+	ArrayList<Contact> PhoneList;
 	
 	
 	//Constructor
 	public PhoneList() {
 		//initialize instance variables
+		PhoneList = new ArrayList<Contact>();
+		
+		
 	}
 	
 	
 	/*
 	 * This should do the following
 	 * (whatever order you feel is best)
-	 *   - ask the user for contact's name and number
-	 *   - create a new Contact object with that input
+	 *   - ask the user for contact's name and number--done
+	 *   - create a new Contact object with that input--done
 	 *   - add that object to the phone list
 	 *        in alphabetical order
 	 *        Hint: compareTo(String other)
@@ -51,15 +58,47 @@ public class PhoneList {
 	 */
 	public void addContact() {
 		
+		Scanner inKey = new Scanner (System.in);
+		System.out.print("What is the contact name: ");
+		String userName = inKey.nextLine();
+		System.out.print("What is their phone number: ");
+		Long userNum = inKey.nextLong();
+		
+		PhoneList.add(new Contact(userName, userNum));
+		
+		for(int i = 0; i<PhoneList.size(); i++) {
+			
+			for (int j = i +1; j < PhoneList.size(); j++) {
+				int num = PhoneList.get(i).getName().compareToIgnoreCase(PhoneList.get(j).getName());//compare to get a value
+				
+				if (num > 0) {
+					Contact holder = PhoneList.get(i);
+					Contact holder1 = PhoneList.get(j);
+					
+					PhoneList.set(i, holder);
+					PhoneList.set(j, holder1);
+					
+				}
+			}
+		}
+		
+		if (PhoneList.size()>=1) {
+			
+		}
+		
 		
 	}
 	
+	public int compare (String s1, String s2) {
+		
+		return s1.compareTo(s2);
+	}
 	
 	
 	/*
 	 * This should do the following
 	 * (whatever order you feel is best)
-	 *   - ask the user for the contact's name
+	 *   - ask the user for the contact's name--done
 	 *   - search through the list for that contact
 	 *   - if the contact is not found
 	 *        tell the user and end the method
@@ -71,8 +110,29 @@ public class PhoneList {
 	 *        
 	 */
 	public void removeContact() {
+		Scanner inKey = new Scanner (System.in);
+		System.out.print("What is the contact you wish to remove: ");
+		String takeThis = inKey.nextLine();
 		
+		boolean there = false;
+		int theNum;
 		
+		for (int i = 0; i < PhoneList.size(); i++) {
+			if (takeThis.equalsIgnoreCase(PhoneList.get(i).getName())) {
+				there = true;
+				System.out.println(PhoneList.get(i) + " has been removed");
+				PhoneList.remove(i);
+				break;
+			}
+			else {
+				there = false;
+				
+			}
+		}
+		
+		if (there = false) {
+			System.out.println("This contact is not in your contacts");
+		}
 	}
 	
 	
@@ -89,6 +149,15 @@ public class PhoneList {
 	 */
 	public void printList() {
 		
+		System.out.println("Name          Number");
+		System.out.println("--------------------");
+		
+		for(int i = 0; i < PhoneList.size(); i++) {
+			
+			System.out.println(PhoneList.get(i) + "\n");//prints in order
+		}
+		
+		System.out.println("--------------------");
 	}
 
 	
